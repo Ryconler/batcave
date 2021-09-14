@@ -1,6 +1,9 @@
 <template>
   <div id="app">
-    <div class="navbar navbar-inverse" role="navigation" style="border-radius: 0">
+    <keep-alive>
+      <router-view />
+    </keep-alive>
+    <!-- <div class="navbar navbar-inverse" role="navigation" style="border-radius: 0">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -65,163 +68,49 @@
       </div>
     </div>
     <div class="container">
-      <div class="alert alert-warning" v-for="msg of errorMessages" v-if="errorMessages.length">
+      <div class="alert alert-warning" v-for="(msg,index) of errorMessages" :key="index" v-show="errorMessages.length">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         {{ msg }}
       </div>
       <router-view></router-view>
-    </div>
+    </div> -->
   </div>
 </template>
 
-<script>
-import {mapState} from 'vuex'
+<script lang="ts">
+import { Options, Vue } from 'vue-class-component'
+import { State } from 'vuex-class'
 
-export default {
-  name: 'App',
-  data () {
-    return {
-      html: `<p style="color:red;">123</p>`
-    }
-  },
-  computed: mapState([
-    'user',
-    'errorMessages',
-    'homeSelect',
-    'urlSelect',
-    'fileSelect',
-    'myLikeSelect',
-    'myURLSelect',
-    'myFileSelect',
-    'changePswSelect',
-    'login',
-    'register'
-  ]),
-  methods: {
-    checkLog () {
-      this.$store.dispatch('checkLog')
-    },
-    logout () {
-      this.$store.dispatch('logout')
-    }
-  },
-  mounted () {
-    this.checkLog()
-  }
+@Options({})
+export default class App extends Vue {
+  @State appData: any
 }
 </script>
 
-<style>
-  body {
-    background-image: url("./assets/images/bg.png");
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed
+<style lang="scss">
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+body {
+  background-image: url('./assets/images/bg.png');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+#app {
+  * {
+    box-sizing: border-box;
   }
-
-  .navbar {
-    border: none;
-  }
-
-  .navbar li a {
-    color: #9d9d9d;
-  }
-
-  .navbar li a:hover {
-    color: aliceblue;
-  }
-
-  .select {
-    border-bottom: 4px solid aliceblue;
-    color: aliceblue !important;
-  }
-
-  .select > a {
-    color: aliceblue !important;
-    font-weight: bold;
-  }
-
-  .dropdown-menu {
-    background: #222;
-  }
-
-  .dropdown-menu li:hover a {
-    background: transparent;
-  }
-
-  b.caret {
-    margin-left: 10px;
-  }
-
-  /* 子组件中的公共样式 */
-  div.page-header {
-    border-bottom: none;
-  }
-
-  div.page-header h1 {
-    display: inline;
-  }
-
-  div.page-header a {
-    float: right;
-    margin-top: 21px;
-    font-weight: bold;
-    color: #ff5809;
-  }
-
-  ul.category li {
-    display: inline;
-    padding: 10px;
-
-  }
-
-  ul.category li a:visited {
-    text-decoration: underline;
-  }
-
-  ul.category li.as a:hover {
-    text-decoration: none;
-  }
-
-  ul.posts {
-    list-style-type: none;
-    padding: 0;
-    margin: 16px 0 0 0;
-    border-top: 1px solid #e0e0e0;
-  }
-
-  ul.posts li.post {
-    padding: 8px;
-    border-bottom: 1px solid #e0e0e0;
-  }
-
-  ul.posts li.post:hover {
-    background-color: #f0f0f0;
-  }
-
-  div.post-title {
-    float: left;
-    font-weight: bold;
-  }
-
-  div.post-title a {
-    color: black;
-  }
-
-  div.post-title a:hover {
-    color: red;
-  }
-
-  div.post-info {
-    text-align: right;
-    font-weight: bold;
-  }
-
-  div.pagination {
-    width: 100%;
-    text-align: right;
-    padding: 0px;
-    margin: 0px;
-  }
+}
+.clearfix::after {
+  display: block;
+  clear: both;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  content: '';
+}
 </style>
